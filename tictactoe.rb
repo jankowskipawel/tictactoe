@@ -35,18 +35,41 @@ def choose(player, board)
 	end
 end
 
+def all_equal?(arr)
+	arr.uniq.size <= 1
+end
+
+def game_won?(board)
+	a1 = [[board[0].symbol, board[1].symbol, board[2].symbol],
+				[board[3].symbol, board[4].symbol, board[5].symbol],
+				[board[6].symbol, board[7].symbol, board[8].symbol],
+				[board[0].symbol, board[3].symbol, board[6].symbol],
+				[board[1].symbol, board[4].symbol, board[7].symbol],
+				[board[2].symbol, board[5].symbol, board[8].symbol],
+				[board[0].symbol, board[4].symbol, board[8].symbol],
+				[board[2].symbol, board[4].symbol, board[6].symbol]]
+	a1.each do |x|
+		if all_equal?(x)
+			Area.display_board(board)
+			puts "#{x[0]} WINS!"
+			return true
+		end
+	end
+	return false
+end
+
 board = [Area.new("1"), Area.new("2"), Area.new("3"), 
 				 Area.new("4"), Area.new("5"), Area.new("6"), 
 				 Area.new("7"), Area.new("8"), Area.new("9")]
 
-game_active = true
-
 puts "\n			TIC TAC TOE"
 puts "2 players. Type number where you want to put your symbol."
 
-while game_active
-
+while true
+	
 	choose("1", board)
-	choose("2", board)
+	game_won?(board) ? break : true
 
+	choose("2", board)
+	game_won?(board) ? break : true
 end
