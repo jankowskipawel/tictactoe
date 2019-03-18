@@ -39,7 +39,7 @@ def all_equal?(arr)
 	arr.uniq.size <= 1
 end
 
-def game_won?(board)
+def game_won?(board, i)
 	a1 = [[board[0].symbol, board[1].symbol, board[2].symbol],
 				[board[3].symbol, board[4].symbol, board[5].symbol],
 				[board[6].symbol, board[7].symbol, board[8].symbol],
@@ -48,6 +48,11 @@ def game_won?(board)
 				[board[2].symbol, board[5].symbol, board[8].symbol],
 				[board[0].symbol, board[4].symbol, board[8].symbol],
 				[board[2].symbol, board[4].symbol, board[6].symbol]]
+	if i == 9
+		Area.display_board(board)
+		puts "DRAW!"
+		return true
+	end   																	#357196482
 	a1.each do |x|
 		if all_equal?(x)
 			Area.display_board(board)
@@ -65,11 +70,14 @@ board = [Area.new("1"), Area.new("2"), Area.new("3"),
 puts "\n			TIC TAC TOE"
 puts "2 players. Type number where you want to put your symbol."
 
+i = 0
+
 while true
-	
 	choose("1", board)
-	game_won?(board) ? break : true
+	i += 1
+	game_won?(board, i) ? break : true
 
 	choose("2", board)
-	game_won?(board) ? break : true
+	i+= 1
+	game_won?(board, i) ? break : true
 end
